@@ -1,0 +1,17 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "source": "index.htm",
+  "type": "module",
+  "scripts": {
+    "ui": "parcel --no-cache --dist-dir \"./out/www-local\" \"./src/index.htm\"",
+    "test": "node tests/do-something.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "parcel": "^2.15.2",
+    "puppeteer": "^24.10.0"
+  }
+}
