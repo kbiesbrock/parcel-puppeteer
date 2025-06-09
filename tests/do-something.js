@@ -11,12 +11,16 @@ import puppeteer from "puppeteer";
     
     await page.screenshot({ path: "tests/screenshots/do-something-start.png" });
 
-    const submitButtonSelector = "#submitButton";
+    const submitButtonSelector = "my-web-component >>> #submitButton";
     await page.waitForSelector(submitButtonSelector);
-    await page.click(submitButtonSelector);
+    const btn = await page.$(submitButtonSelector);
+    await btn.click();
 
-    const headingSelector = await page.waitForSelector("#heading");
-    const headingValue = await headingSelector?.evaluate(el => el.textContent.trim());
+    console.log("Button clicked, waiting for heading to update...");
+
+    const headingSelector = "my-web-component >>> #heading";
+    const heading = await page.$(headingSelector);
+    const headingValue = await page.evaluate(el => el.innerText, heading);
 
     await page.screenshot({ path: "tests/screenshots/do-something-final.png" });
 
