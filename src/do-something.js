@@ -13,7 +13,7 @@ class MyWebComponent extends HTMLElement {
                 button{ flex: 1; margin: 1em; }
             </style>
             <h1 id="heading">Hello, X!</h1>
-            <input id="inputField" type="text" placeholder="Type something here..." />
+            <my-input id="inputField"></my-input>
             <button id="submitButton">Click me!</button>
         `;
         this.#heading = this.#shadow.querySelector('#heading');
@@ -32,4 +32,23 @@ class MyWebComponent extends HTMLElement {
     }
 }
 
-customElements.define('my-web-component', MyWebComponent)
+customElements.define('my-web-component', MyWebComponent);
+
+
+class MyInput extends HTMLElement {
+    #shadow = this.attachShadow({ mode: 'open' });
+    #inputField;
+
+    constructor() {
+        super();
+        this.#shadow.innerHTML = `<input type="text" />`;
+        this.#inputField = this.#shadow.querySelector('input');
+    }
+
+    get inputField() { return this.#inputField; }
+    set value(v) { this.#inputField.value = v; }
+    get value() { return this.#inputField.value; }
+}
+
+customElements.define('my-input', MyInput);
+

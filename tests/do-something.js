@@ -23,7 +23,7 @@ import puppeteer from "puppeteer";
 
     await page.screenshot({ path: "tests/screenshots/do-something-mid.png" });
 
-    const input = await page.type("my-web-component >>> #inputField", "Test Engineer says:");
+    const input = await page.type("my-web-component >>> #inputField >>> input", "Test Engineer says:");
     await page.evaluate(() => { document.querySelector('my-web-component').talkToMe("Hello, Beautiful!"); })
     headingValue = await page.evaluate(el => el.innerText, heading);
     test("Test Engineer says: Hello, Beautiful!", headingValue);
