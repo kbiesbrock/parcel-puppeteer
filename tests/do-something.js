@@ -16,18 +16,23 @@ import puppeteer from "puppeteer";
     const btn = await page.$(submitButtonSelector);
     await btn.click();
 
-    console.log("Button clicked, waiting for heading to update...");
-
     const headingSelector = "my-web-component >>> #heading";
     const heading = await page.$(headingSelector);
-    const headingValue = await page.evaluate(el => el.innerText, heading);
+    let headingValue = await page.evaluate(el => el.innerText, heading);
+    test("Hello, World!", headingValue);
+
+    await page.screenshot({ path: "tests/screenshots/do-something-mid.png" });
+
+    const input = await page.type("my-web-component >>> #inputField", "Test Engineer says:");
+    await page.evaluate(() => { document.querySelector('my-web-component').talkToMe("Hello, Beautiful!"); })
+    headingValue = await page.evaluate(el => el.innerText, heading);
+    test("Test Engineer says: Hello, Beautiful!", headingValue);
 
     await page.screenshot({ path: "tests/screenshots/do-something-final.png" });
 
-    const expectedValue = "Hello, World!";
-    console.assert(headingValue === expectedValue, `Expected "${expectedValue}", but got "${headingValue}"`);
-
-    console.log("Heading:", headingValue);
-
     await browser.close();
 })();
+
+function test(expected, actual) {
+    console.assert(expected === actual, `Expected "${expected}", but got "${actual}"`);
+}
